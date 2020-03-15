@@ -13,6 +13,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+Auth::routes();
+
+Route::get('/email', function () {
+    return new \App\Mail\NewUserWelcome();
 });
+
+Route::get('/', 'PostsController@index');
+
+Route::post('/follow/{user}', 'FollowsController@store');
+
+
+Route::get('/p/create', 'PostsController@create');
+Route::post('/p', 'PostsController@store');
+Route::get('/p/{post}', 'PostsController@show');
+
+Route::get('/profile/{user}', 'ProfileController@index')->name('profile.show');
+Route::get('/profile/{user}/edit', 'ProfileController@edit')->name('profile.edit');
+Route::patch('/profile/{user}', 'ProfileController@update')->name('profile.update');
